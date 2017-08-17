@@ -1,0 +1,159 @@
+---
+swagger: "2.0"
+info:
+  description: "Aquest és un projecte de prova per entendre swagger"
+  version: "0.0.1"
+  title: "Ibexestudio Tesla vehicles de prova"
+host: "virtserver.swaggerhub.com"
+basePath: "/Ibexcatalog/API-Prova/0.0.1"
+schemes:
+- "https"
+paths:
+  /vehicle:
+    get:
+      description: "Informació  sobre un vehicle propi"
+      operationId: "vehicleGET"
+      parameters: []
+      responses:
+        200:
+          description: "Resposta correcta"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+      x-swagger-router-controller: "Default"
+  /vehicles/{id}/data_request/drive_state:
+    get:
+      description: "Returns the driving and position state of the vehicle."
+      operationId: "drive_state"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The ID number of the car"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Succes"
+          schema:
+            $ref: "#/definitions/inline_response_200_1"
+      x-swagger-router-controller: "Default"
+  /vehicles/{id}/command/set_temps:
+    post:
+      description: "Set the temperature target for the HVAC system."
+      operationId: "set_temp"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The ID number of the car"
+        required: true
+        type: "string"
+      - name: "driver_temp"
+        in: "query"
+        description: "The desitre temperature on the driver's side in celcius."
+        required: true
+        type: "string"
+      - name: "passenger_temp"
+        in: "query"
+        description: "The desire temperature on the passanger's side in celcius"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "succes"
+          schema:
+            $ref: "#/definitions/inline_response_200_2"
+      x-swagger-router-controller: "Default"
+  /vehicles/{id}/data_request/climate_state:
+    get:
+      description: "Returns the current temperature and climate control state."
+      operationId: "climate_state"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The ID number of the car"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "succes"
+          schema:
+            $ref: "#/definitions/inline_response_200_3"
+      x-swagger-router-controller: "Default"
+definitions:
+  inline_response_200_1:
+    properties:
+      shift_state:
+        type: "string"
+        example: "sport"
+      speed:
+        type: "number"
+        format: "double"
+        example: 94.5
+      latitude:
+        type: "number"
+        format: "double"
+        example: 37.42920000000000158024704433046281337738037109375
+        description: "degrees north of equator"
+      longitude:
+        type: "number"
+        format: "double"
+        example: 122.1380999999999943383954814635217189788818359375
+        description: "degrees west of the prime meridian"
+      heading:
+        type: "integer"
+        format: "int32"
+        example: 6
+        description: "integer compass heading"
+        minimum: 0
+        maximum: 359
+  inline_response_200:
+    properties:
+      color:
+        type: "string"
+        example: "Red"
+      display_name:
+        type: "string"
+        example: "Keshav's Model S"
+      vehicle_id:
+        type: "string"
+        example: "001"
+      vin:
+        type: "string"
+        example: "Alafrwefw"
+  inline_response_200_2:
+    properties:
+      result:
+        type: "boolean"
+        example: true
+      reason:
+        type: "string"
+        example: ""
+  inline_response_200_3:
+    properties:
+      inside_temp:
+        type: "number"
+        format: "double"
+        example: 17
+        description: "degC inside car"
+      outside_temp:
+        type: "number"
+        format: "double"
+        example: 9.5
+        description: "degC outside car or null"
+      driver_temp_setting:
+        type: "number"
+        format: "double"
+        example: 22.60000000000000142108547152020037174224853515625
+        description: "degC of driver temperature setpoint"
+      passenger_temp_setting:
+        type: "number"
+        format: "double"
+        example: 22.60000000000000142108547152020037174224853515625
+        description: "degC of passenger temperature setpoint"
+      is_auto_conditioning_on:
+        type: "boolean"
+        example: false
+      fan_status:
+        type: "integer"
+        format: "int32"
+        example: 3
+        description: "fan speed 0-6 or null"
